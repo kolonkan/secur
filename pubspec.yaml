@@ -34,6 +34,8 @@ dependencies:
   audioplayers: ^5.2.1  # Pour la lecture audio
   path_provider: ^2.1.1  # Pour gérer les chemins de fichiers
   web_socket_channel: ^3.0.1
+  firebase_messaging: ^14.7.10
+
 
   image_picker: ^0.8.7+3 #package pour la camera..
   animate_do: ^2.0.0 #package pour les animations
