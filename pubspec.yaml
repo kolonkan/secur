@@ -36,7 +36,6 @@ dependencies:
   web_socket_channel: ^3.0.1
   firebase_messaging: ^14.7.10
 
-
   image_picker: ^0.8.7+3 #package pour la camera..
   animate_do: ^2.0.0 #package pour les animations
   shimmer: ^3.0.0
