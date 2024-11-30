@@ -4,7 +4,10 @@ import 'package:my_app/actualites/actualites.dart';
 import 'package:my_app/conseils/conseil.dart';
 import 'package:my_app/contact/contact.dart';
 import 'package:my_app/numurgence/numurgence.dart';
+import 'package:my_app/screens/about/about_screen.dart';
+import 'package:my_app/screens/emergency/service_list_screen.dart';
 import 'package:my_app/screens/notifications_screen.dart';
+import 'package:my_app/screens/profile/profile_screen.dart';
 import 'package:my_app/screens/search_screen.dart';
 import 'package:my_app/screens/settings_screen.dart';
 
@@ -141,7 +144,10 @@ class _AccueilState extends State<Accueil> {
                       title: 'Profil',
                       onTap: () {
                         // TODO: Navigation vers le profil
-                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ProfileScreen()),
+                        );
                       },
                     ),
                     _buildDrawerItem(
@@ -163,7 +169,10 @@ class _AccueilState extends State<Accueil> {
                       title: 'À propos',
                       onTap: () {
                         // TODO: Navigation vers à propos
-                        Navigator.pop(context);
+                       Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>  AboutScreen()),
+                        );
                       },
                     ),
                     _buildDrawerItem(
@@ -359,7 +368,14 @@ class _AccueilState extends State<Accueil> {
                         title: 'Urgences\nMédicales',
                         color: Colors.red,
                         onTap: () {
-                          // TODO: Navigation
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const ServiceListScreen(
+                              serviceType: 'Urgence Médicale',
+                              serviceColor: Colors.red,
+                              serviceIcon: Icons.local_hospital,
+                            )),
+                          );
                         },
                       ),
                       _buildServiceCard(
@@ -367,7 +383,14 @@ class _AccueilState extends State<Accueil> {
                         title: 'Police',
                         color: Colors.blue,
                         onTap: () {
-                          // TODO: Navigation
+                         Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const ServiceListScreen (
+                              serviceType: 'Police',
+                              serviceColor: Colors.blue,
+                              serviceIcon: Icons.local_police,
+                            )),
+                          );
                         },
                       ),
                       _buildServiceCard(
@@ -375,7 +398,14 @@ class _AccueilState extends State<Accueil> {
                         title: 'Pompiers',
                         color: Colors.orange,
                         onTap: () {
-                          // TODO: Navigation
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const ServiceListScreen(
+                                serviceType: 'Pompiers',
+                                serviceColor: Colors.orange,
+                                serviceIcon: Icons.fire_truck,
+                              )),
+                            );
                         },
                       ),
                       _buildServiceCard(
@@ -383,7 +413,14 @@ class _AccueilState extends State<Accueil> {
                         title: 'Assistance\nRoutière',
                         color: Colors.green,
                         onTap: () {
-                          // TODO: Navigation
+                            Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const ServiceListScreen(
+                              serviceType: 'Assistance Routière',
+                              serviceColor: Colors.green,
+                              serviceIcon: Icons.support_agent,
+                            )),
+                          );
                         },
                       ),
                     ],
