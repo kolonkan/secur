@@ -155,10 +155,7 @@ class Numurgence extends StatelessWidget {
           currentIndex: 3,
           onTap: (int index) {
             if (index == 0) {
-              Navigator.pushReplacement(
-                context, 
-                MaterialPageRoute(builder: (context) => const Accueil())
-              );
+              Navigator.pushNamed(context, '/acceuil' );
             } else if (index == 1) {
               Navigator.pushReplacement(
                 context, 

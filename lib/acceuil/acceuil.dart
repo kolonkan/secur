@@ -7,9 +7,14 @@ import 'package:my_app/numurgence/numurgence.dart';
 import 'package:my_app/screens/notifications_screen.dart';
 import 'package:my_app/screens/search_screen.dart';
 import 'package:my_app/screens/settings_screen.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class Accueil extends StatefulWidget {
-  const Accueil({super.key});
+
+  WebSocketChannel webSocketChannel;
+  Stream<dynamic> stream;
+
+  Accueil({super.key, required this.webSocketChannel, required this.stream});
 
   @override
   State<Accueil> createState() => _AccueilState();
@@ -17,6 +22,19 @@ class Accueil extends StatefulWidget {
 
 class _AccueilState extends State<Accueil> {
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.stream.listen(onMessageReceivedWebsocket);
+    widget.webSocketChannel.sink.add("home page is responding");
+  }
+
+  void onMessageReceivedWebsocket(dynamic event){
+    if( !mounted ) return;
+
+    print("event $event");
+  }
 
   @override
   Widget build(BuildContext context) {

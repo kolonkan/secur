@@ -1,7 +1,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/acceuil/acceuil.dart';
+import 'package:my_app/models/user.dart';
 import 'package:my_app/screens/auth/register_screen.dart';
+import 'package:my_app/service/django_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -190,10 +192,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Accueil()),
-                      );
+                      User user = User(numero: this._phoneController.text, password: this._passwordController.text);
+                      APIService.apiConnexion(user)
+                      .then((value) {
+                        if( value ) Navigator.pushNamed(context, '/acceuil' );
+                        else print("not connected");
+                      })
+                      .onError((error, stackTrace) {
+                        print("$error $stackTrace");
+                      });
                     }
                   },
                   style: ElevatedButton.styleFrom(

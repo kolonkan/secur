@@ -119,10 +119,7 @@ class AuthScreen extends StatelessWidget {
                       delay: const Duration(milliseconds: 600),
                       child: TextButton(
                         onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => const Accueil()),
-                          );
+                          Navigator.pushNamed(context, '/acceuil' );
                         },
                         child: const Text(
                           'Continuer sans compte',

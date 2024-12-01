@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:my_app/acceuil/acceuil.dart';
 
+import '../../models/user.dart';
+import '../../service/django_service.dart';
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -151,6 +154,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           phoneNumber.number == null ||
                           phoneNumber.number!.isEmpty) {
                         return 'Veuillez entrer un numéro valide';
+                      }else if( _phoneController.text.length == 9 ){
+                        return "Entrez un numero valide";
                       }
                       return null;
                     },
@@ -261,11 +266,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      // TODO: Implémenter la logique d'inscription
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Accueil()),
-                      );
+                      User user = User(nom:this._nameController.text, prenom:this._nameController.text, numero: this._phoneController.text, password: this._passwordController.text);
+                      APIService.apiInscription(user)
+                          .then((value) {
+                        if( value ) Navigator.pushNamed(context, '/acceuil' );
+                        else print("not connected");
+                      })
+                          .onError((error, stackTrace) {
+                        print("$error $stackTrace");
+                      });
                     }
                   },
                   style: ElevatedButton.styleFrom(

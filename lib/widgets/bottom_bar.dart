@@ -31,10 +31,7 @@ class CustomBottomBar extends StatelessWidget {
           
           switch (index) {
             case 0:
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const Accueil()),
-              );
+              Navigator.pushNamed(context, "/acceuil" );
               break;
             case 1:
               Navigator.pushReplacement(
