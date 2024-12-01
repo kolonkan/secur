@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (value == null || value.isEmpty) {
       return 'Veuillez entrer votre numéro de téléphone';
     }
-    if (value.length < 10) {
+    if (value.length != 9) {
       return 'Numéro de téléphone invalide';
     }
     return null;
@@ -195,11 +195,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       User user = User(numero: this._phoneController.text, password: this._passwordController.text);
                       APIService.apiConnexion(user)
                       .then((value) {
-                        if( value ) Navigator.pushNamed(context, '/acceuil' );
-                        else print("not connected");
+                        if( value == true ){ Navigator.pushNamed(context, '/acceuil' );}
+                        else{ print("not connected");}
                       })
                       .onError((error, stackTrace) {
-                        print("$error $stackTrace");
+                        print("on error $error $stackTrace");
                       });
                     }
                   },

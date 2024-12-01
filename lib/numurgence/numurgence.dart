@@ -155,16 +155,13 @@ class Numurgence extends StatelessWidget {
           currentIndex: 3,
           onTap: (int index) {
             if (index == 0) {
-              Navigator.pushNamed(context, '/acceuil' );
+              Navigator.pushNamed(context, "/acceuil" );
             } else if (index == 1) {
-              Navigator.pushReplacement(
-                context, 
-                MaterialPageRoute(builder: (context) => const Actualites())
-              );
+              Navigator.pushNamed(context, "/contact");
             } else if (index == 2) {
               Navigator.pushReplacement(
-                context, 
-                MaterialPageRoute(builder: (context) => Conseil())
+                  context,
+                  MaterialPageRoute(builder: (context) => Conseil())
               );
             }
           },
@@ -194,10 +191,7 @@ class Numurgence extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const Contact()),
-          );
+          Navigator.pushNamed(context, "/contact" );
         },
         backgroundColor: const Color(0xFF094FC6),
         child: const Icon(Icons.forum, color: Colors.white),
@@ -255,25 +249,145 @@ class EmergencyTile extends StatelessWidget {
       onTap: () {
         showDialog(
           context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Appeler le numéro d\'urgence'),
-              content: Text('Voulez-vous appeler le $number ?'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('Annuler'),
+          builder: (BuildContext context) => AlertDialog(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            contentPadding: EdgeInsets.zero,
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // En-tête avec couleur
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(vertical: 25),
+                  decoration: BoxDecoration(
+                    color: color.withOpacity(0.1),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: color.withOpacity(0.2),
+                              blurRadius: 8,
+                              spreadRadius: 2,
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          icon,
+                          size: 32,
+                          color: color,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        label,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    _makePhoneCall(number, context);
-                  },
-                  child: const Text('Appeler'),
+                // Corps du dialogue
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 25, 20, 20),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.phone, color: color, size: 24),
+                          const SizedBox(width: 10),
+                          Text(
+                            number,
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: color,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        'Vous êtes sur le point de passer un appel d\'urgence',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                      const SizedBox(height: 25),
+                      Row(
+                        children: [
+                          // Bouton Annuler
+                          Expanded(
+                            child: TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              style: TextButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(vertical: 12),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              child: Text(
+                                'Annuler',
+                                style: TextStyle(
+                                  color: Colors.grey.shade600,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          // Bouton Appeler
+                          Expanded(
+                            child: ElevatedButton.icon(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                _makePhoneCall(number, context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: color,
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(vertical: 12),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                elevation: 0,
+                              ),
+                              icon: const Icon(Icons.phone, size: 20),
+                              label: const Text(
+                                'Appeler',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
-            );
-          },
+            ),
+          ),
         );
       },
       child: Container(

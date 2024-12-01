@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/actualites/actualites.dart';
@@ -7,6 +9,7 @@ import 'package:my_app/numurgence/numurgence.dart';
 import 'package:my_app/screens/notifications_screen.dart';
 import 'package:my_app/screens/search_screen.dart';
 import 'package:my_app/screens/settings_screen.dart';
+import 'package:my_app/utils/KUtils.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class Accueil extends StatefulWidget {
@@ -27,13 +30,11 @@ class _AccueilState extends State<Accueil> {
   void initState() {
     super.initState();
     widget.stream.listen(onMessageReceivedWebsocket);
-    widget.webSocketChannel.sink.add("home page is responding");
   }
 
   void onMessageReceivedWebsocket(dynamic event){
     if( !mounted ) return;
 
-    print("event $event");
   }
 
   @override
@@ -195,31 +196,37 @@ class _AccueilState extends State<Accueil> {
                   ],
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.all(20),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.red.withOpacity(0.1),
+              GestureDetector(
+                onTap: () async {
+                  await Kutils.saveStudentSession(null);
+                  Navigator.pushNamed(context, "/onboardingscreen" );
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red.withOpacity(0.1),
+                        ),
+                        child: const Icon(
+                          Icons.logout,
+                          color: Colors.red,
+                          size: 20,
+                        ),
                       ),
-                      child: const Icon(
-                        Icons.logout,
-                        color: Colors.red,
-                        size: 20,
+                      const SizedBox(width: 15),
+                      const Text(
+                        'Déconnexion',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 15),
-                    const Text(
-                      'Déconnexion',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -266,16 +273,16 @@ class _AccueilState extends State<Accueil> {
                             const Text(
                               'Bienvenue',
                               style: TextStyle(
-                                fontSize: 28,
+                                fontSize: 26,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 6),
                             Text(
                               'Que pouvons-nous faire pour vous ?',
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 14,
                                 color: Colors.white.withOpacity(0.9),
                               ),
                             ),
@@ -292,7 +299,7 @@ class _AccueilState extends State<Accueil> {
                               const Icon(
                                 Icons.emergency,
                                 color: Colors.white,
-                                size: 20,
+                                size: 15,
                               ),
                               const SizedBox(width: 5),
                               Text(
@@ -501,10 +508,7 @@ class _AccueilState extends State<Accueil> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const Contact()),
-          );
+          Navigator.pushNamed(context, "/contact" );
         },
         backgroundColor: const Color(0xFF094FC6),
         child: const Icon(Icons.forum, color: Colors.white),

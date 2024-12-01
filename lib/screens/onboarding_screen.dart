@@ -158,7 +158,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 ),
                                 child: Icon(
                                   contents[i].icon,
-                                  size: 80,
+                                  size: 50,
                                   color: const Color(0xFF094FC6),
                                 ),
                               ),
@@ -171,7 +171,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 contents[i].title,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
-                                  fontSize: 28,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Color(0xFF094FC6),
                                 ),

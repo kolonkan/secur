@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/contact/contact.dart';
+import 'package:my_app/screens/onboarding_screen.dart';
 import 'package:my_app/screens/splash_screen.dart';
 import 'package:my_app/utils/KUtils.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -12,7 +14,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await FirebaseAPI().initNotifications();
-  //NotificationService().initNotification();
+  NotificationService().initNotification();
   runApp(const MyApp());
 }
 
@@ -49,6 +51,8 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       routes: {
         '/acceuil'  : (context) => Accueil (webSocketChannel: webSocketChannel,stream: streamBroadcast),
+        '/contact'  : (context) => Contact (webSocketChannel: webSocketChannel,stream: streamBroadcast),
+        '/onboardingscreen'  : (context) => const OnboardingScreen ()
       },
     );
   }

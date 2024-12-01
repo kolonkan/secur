@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:my_app/models/user.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Kutils{
 
@@ -69,12 +70,13 @@ class Kutils{
     """;
 
     // IP Addresse
-    static const String IP = "192.168.1.133";
+    static const String IP = "192.168.43.134";
     static const String PORT = "8000";
 
     // EndPoints api
     static const String ENDPOINT_INSCRIPTION = "http://$IP:$PORT/sguser/add_user";
     static const String ENDPOINT_CONNEXION = "http://$IP:$PORT/sguser/login";
+    static const String ENDPOINT_ADD_IMAGE = "http://$IP:$PORT/sguser/upload";
     static const String ENDPOINT_CREATE_ACTION = "http://$IP:$PORT/users/api/createAction";
     static const String ENDPOINT_NOTIFICATIONS = "http://$IP:$PORT/users/api/indexNotification";
     static const String ENDPOINT_ACTIONS = "http://$IP:$PORT/users/api/indexAction";
@@ -145,14 +147,22 @@ class Kutils{
         return (surface*QUANTITE_PAR_METRE_CARRE);
     }
 
-    static Future<bool> saveStudentSession(User user) async {
+    static Future<bool> saveStudentSession(User? user) async {
         final prefs = await SharedPreferences.getInstance();
+        if( user == null ) return await prefs.setString("user", "" );
         return await prefs.setString('user', jsonEncode(user.toJson()));
+    }
+
+    static Future<User> getUserLogin() async {
+        final prefs = await SharedPreferences.getInstance();
+        Map<String, dynamic> mapUser = jsonDecode( prefs.getString("user" )! );
+        User user = User.fromJson(mapUser);
+        return user;
     }
 
     static Future<bool> isStudentLoggedIn() async {
         final prefs = await SharedPreferences.getInstance();
-        return prefs.containsKey('user');
+        return prefs.getString('user')!.isEmpty ? false : true;
     }
 
     // static void onMessageReceivedWebsocketGlobal(dynamic event, AudioPlayer audioPlayer){

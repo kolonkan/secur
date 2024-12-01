@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/screens/onboarding_screen.dart';
+import 'package:my_app/utils/KUtils.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -34,11 +35,10 @@ class _SplashScreenState extends State<SplashScreen>
     _controller.forward();
 
     // Navigation après l'animation
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const OnboardingScreen()),
-      );
+    Future.delayed(const Duration(seconds: 3), () async {
+      bool result = await Kutils.isStudentLoggedIn();
+      if( result == false ) Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const OnboardingScreen()));
+      else Navigator.pushNamed(context, "/acceuil");
     });
   }
 

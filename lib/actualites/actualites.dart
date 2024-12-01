@@ -1,10 +1,198 @@
-import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter/material.dart';
 import 'package:my_app/widgets/bottom_bar.dart';
-import 'package:my_app/contact/contact.dart';
+import 'package:my_app/actualites/article_detail_screen.dart';
 
-class Actualites extends StatelessWidget {
+class Actualites extends StatefulWidget {
   const Actualites({super.key});
+
+  @override
+  State<Actualites> createState() => _ActualitesState();
+}
+
+class _ActualitesState extends State<Actualites> {
+  void _showShareDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        contentPadding: EdgeInsets.zero,
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // En-tête
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              decoration: BoxDecoration(
+                color: const Color(0xFF094FC6).withOpacity(0.1),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF094FC6).withOpacity(0.2),
+                          blurRadius: 8,
+                          spreadRadius: 2,
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.share,
+                      size: 30,
+                      color: Color(0xFF094FC6),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  const Text(
+                    'Partager via',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Options de partage
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildShareOption(
+                        icon: Icons.message,
+                        label: 'SMS',
+                        color: Colors.green,
+                        onTap: () {
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Partage par SMS...'),
+                              behavior: SnackBarBehavior.floating,
+                            ),
+                          );
+                        },
+                      ),
+                      _buildShareOption(
+                        icon: Icons.message,
+                        label: 'WhatsApp',
+                        color: const Color(0xFF25D366),
+                        onTap: () {
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Partage sur WhatsApp...'),
+                              behavior: SnackBarBehavior.floating,
+                            ),
+                          );
+                        },
+                      ),
+                      _buildShareOption(
+                        icon: Icons.facebook,
+                        label: 'Facebook',
+                        color: const Color(0xFF1877F2),
+                        onTap: () {
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Partage sur Facebook...'),
+                              behavior: SnackBarBehavior.floating,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildShareOption(
+                        icon: Icons.copy,
+                        label: 'Copier',
+                        color: Colors.grey.shade700,
+                        onTap: () {
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Lien copié dans le presse-papiers'),
+                              behavior: SnackBarBehavior.floating,
+                            ),
+                          );
+                        },
+                      ),
+                      _buildShareOption(
+                        icon: Icons.more_horiz,
+                        label: 'Plus',
+                        color: Colors.orange,
+                        onTap: () {
+                          Navigator.pop(context);
+                          // Implémenter plus d'options de partage
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildShareOption({
+    required IconData icon,
+    required String label,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.1),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              icon,
+              color: color,
+              size: 25,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            label,
+            style: TextStyle(
+              color: color,
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -238,9 +426,7 @@ class Actualites extends StatelessWidget {
                     children: [
                       Expanded(
                         child: OutlinedButton.icon(
-                          onPressed: () {
-                            // TODO: Implémenter le partage
-                          },
+                          onPressed: () => _showShareDialog(context),
                           icon: const Icon(Icons.share_outlined),
                           label: const Text('Partager'),
                           style: OutlinedButton.styleFrom(
@@ -257,7 +443,18 @@ class Actualites extends StatelessWidget {
                       Expanded(
                         child: ElevatedButton.icon(
                           onPressed: () {
-                            // TODO: Implémenter la lecture complète
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ArticleDetailScreen(
+                                  title: title,
+                                  description: description,
+                                  image: image,
+                                  date: date,
+                                  category: category,
+                                ),
+                              ),
+                            );
                           },
                           icon: const Icon(Icons.arrow_forward),
                           label: const Text('Lire plus'),

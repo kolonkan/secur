@@ -258,10 +258,7 @@ class Conseil extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const Contact()),
-          );
+          Navigator.pushNamed(context, "/contact" );
         },
         backgroundColor: const Color(0xFF094FC6),
         child: const Icon(Icons.forum, color: Colors.white),

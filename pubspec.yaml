@@ -37,6 +37,7 @@ dependencies:
   firebase_messaging: ^14.7.10
   http: ^1.2.2
   flutter_local_notifications: ^17.2.4
+  shared_preferences: ^2.3.3
 
   image_picker: ^0.8.7+3 #package pour la camera..
   animate_do: ^2.0.0 #package pour les animations

@@ -267,12 +267,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       User user = User(nom:this._nameController.text, prenom:this._nameController.text, numero: this._phoneController.text, password: this._passwordController.text);
-                      APIService.apiInscription(user)
-                          .then((value) {
+                      APIService.apiInscription(user).
+                      then((value) {
                         if( value ) Navigator.pushNamed(context, '/acceuil' );
                         else print("not connected");
-                      })
-                          .onError((error, stackTrace) {
+                      }).
+                      onError((error, stackTrace) {
                         print("$error $stackTrace");
                       });
                     }
