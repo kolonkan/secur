@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:my_app/acceuil/acceuil.dart';
+import 'package:flutter/services.dart'; // Importer services pour l'input formatter
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -18,6 +19,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _confirmPasswordController = TextEditingController();
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
+
+  bool _isPhoneNumberComplete = false; // Cette variable gère l'état de la saisie du téléphone
 
   // Validation pour le numéro de téléphone
   String? validatePhoneNumber(String? value) {
@@ -137,6 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     controller: _phoneController,
                     decoration: InputDecoration(
                       hintText: 'Numéro de téléphone',
+                      prefixIcon: const Icon(Icons.phone),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                         borderSide: BorderSide.none,
@@ -155,8 +159,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       return null;
                     },
                     onChanged: (phone) {
-                      // Vous pouvez ajouter une logique ici pour surveiller le numéro
+                      // Logique pour vérifier si le numéro contient 9 chiffres
+                      if (phone.number != null && phone.number!.length == 9) {
+                        setState(() {
+                          _isPhoneNumberComplete = true; // Numéro de téléphone complet
+                        });
+                      } else {
+                        setState(() {
+                          _isPhoneNumberComplete = false;
+                        });
+                      }
                     },
+                    inputFormatters: [
+                      // Limiter la saisie à 9 chiffres sans afficher le compteur
+                      FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(9),
+                    ],
+                    keyboardType: TextInputType.phone, // Assurez-vous que le clavier numérique est toujours affiché
+                    // Retirer toute utilisation de buildCounter pour ne pas afficher de compteur de caractères
                   ),
                 ),
               ),
