@@ -251,7 +251,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         onPressed: () {
                           setState(() {
-                            _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
+                            _isConfirmPasswordVisible =
+                                !_isConfirmPasswordVisible;
                           });
                         },
                       ),
@@ -284,7 +285,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       // TODO: Implémenter la logique d'inscription
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const Accueil()),
+                        MaterialPageRoute(
+                            builder: (context) => const Accueil()),
                       );
                     }
                   },
